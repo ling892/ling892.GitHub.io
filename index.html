@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>我的个人网站</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="background-layer" aria-hidden="true"></div>
+    <div class="background-shade" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="回到首页">
+        <span class="brand-mark">M</span>
+        <span id="navName">我的个人网站</span>
+      </a>
+      <nav class="site-nav" aria-label="主导航">
+        <a href="#about">介绍</a>
+        <a href="#gallery">相册</a>
+        <a href="#diary">生活</a>
+        <a href="#anime">动漫</a>
+        <a href="#settings">背景</a>
+      </nav>
+      <div class="owner-auth" aria-label="站长登录">
+        <span id="ownerStatus">访客模式</span>
+        <form id="ownerLoginForm">
+          <input class="sr-only" type="text" value="owner" autocomplete="username" aria-hidden="true" tabindex="-1" />
+          <input id="ownerPassword" type="password" placeholder="站长密码" autocomplete="current-password" />
+          <button type="submit">登录</button>
+        </form>
+        <button id="ownerLogout" type="button" hidden>退出</button>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="intro-section" id="about">
+        <div class="intro-copy">
+          <p class="small-label">PERSONAL SPACE</p>
+          <h1 id="profileName" contenteditable="true" spellcheck="false">你好，我是你的名字</h1>
+          <p id="profileRole" class="role" contenteditable="true" spellcheck="false">
+            这里可以写职业、兴趣、城市，或者一句你喜欢的自我介绍。
+          </p>
+          <p id="profileBio" class="bio" contenteditable="true" spellcheck="false">
+            这是一个可以长期使用的个人主页。你可以编辑这段介绍，加入自己的生活照片，并从本地图片文件夹中挑选背景，让页面随着心情变化。
+          </p>
+
+          <div class="intro-actions owner-only">
+            <button class="primary-action" id="saveProfile" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z" />
+                <path d="M17 21v-8H7v8M7 3v5h8" />
+              </svg>
+              保存介绍
+            </button>
+            <button class="quiet-action" id="resetProfile" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 12a9 9 0 1 0 3-6.7" />
+                <path d="M3 4v6h6" />
+              </svg>
+              恢复默认
+            </button>
+          </div>
+        </div>
+
+        <aside class="control-panel" id="settings" aria-label="背景设置">
+          <div class="panel-heading">
+            <h2>背景图片</h2>
+            <span id="backgroundCount">默认背景</span>
+          </div>
+          <div class="background-preview" id="backgroundPreview" aria-label="当前背景预览"></div>
+          <div class="button-grid owner-only">
+            <button id="chooseBackgroundFolder" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />
+              </svg>
+              选择文件夹
+            </button>
+            <button id="prevBackground" type="button" aria-label="上一张背景">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+            <button id="nextBackground" type="button" aria-label="下一张背景">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
+            <button id="randomBackground" type="button" aria-label="随机背景">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M16 3h5v5" />
+                <path d="m4 20 7-7" />
+                <path d="m15 9 6-6" />
+                <path d="M21 16v5h-5" />
+                <path d="m15 15 6 6" />
+                <path d="m4 4 5 5" />
+              </svg>
+            </button>
+          </div>
+          <p class="status-line owner-only" id="backgroundStatus">当前使用默认背景。</p>
+          <input id="backgroundFolderInput" type="file" accept="image/*" webkitdirectory directory multiple hidden />
+        </aside>
+      </section>
+
+      <section class="gallery-section" id="gallery">
+        <div class="section-heading">
+          <div>
+            <p class="small-label">PHOTO WALL</p>
+            <h2>我的图片</h2>
+          </div>
+          <div class="gallery-actions owner-only">
+            <button id="chooseGalleryImages" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+              添加图片
+            </button>
+            <button id="clearGallery" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 6h18" />
+                <path d="M8 6V4h8v2" />
+                <path d="m19 6-1 14H6L5 6" />
+              </svg>
+              清空
+            </button>
+          </div>
+          <input id="galleryInput" type="file" accept="image/*" multiple hidden />
+        </div>
+
+        <div class="gallery-grid" id="galleryGrid" aria-live="polite">
+          <article class="empty-gallery">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" />
+              <path d="m4 16 4-4 4 4 3-3 5 5" />
+              <circle cx="15" cy="8" r="1.5" />
+            </svg>
+            <p>添加图片后会显示在这里。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="life-section" id="diary">
+        <div class="section-heading">
+          <div>
+            <p class="small-label">DAILY LIFE</p>
+            <h2>每日生活记录</h2>
+          </div>
+          <p class="section-note">写下今天的片段，之后可以随时回来查看。</p>
+        </div>
+
+        <div class="life-layout">
+          <form class="diary-form owner-only" id="diaryForm">
+            <div class="field-row">
+              <label>
+                日期
+                <input id="diaryDate" type="date" required />
+              </label>
+              <label>
+                心情
+                <select id="diaryMood">
+                  <option value="平静">平静</option>
+                  <option value="开心">开心</option>
+                  <option value="忙碌">忙碌</option>
+                  <option value="疲惫">疲惫</option>
+                  <option value="期待">期待</option>
+                </select>
+              </label>
+            </div>
+            <label>
+              标题
+              <input id="diaryTitle" type="text" maxlength="40" placeholder="今天发生了什么？" required />
+            </label>
+            <label>
+              内容
+              <textarea id="diaryContent" rows="7" maxlength="1200" placeholder="写下今天的生活、想法、看过的作品或值得记住的小事。" required></textarea>
+            </label>
+            <div class="diary-photo-field">
+              <div class="diary-photo-heading">
+                <span>图片</span>
+                <small>最多 4 张，保存时会自动压缩</small>
+              </div>
+              <div class="diary-photo-actions">
+                <button id="chooseDiaryImages" type="button">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 5v14M5 12h14" />
+                  </svg>
+                  添加图片
+                </button>
+                <button id="clearDiaryImages" type="button">移除图片</button>
+              </div>
+              <div class="diary-photo-preview" id="diaryPhotoPreview" aria-live="polite">
+                <p>还没有选择图片。</p>
+              </div>
+              <input id="diaryImageInput" type="file" accept="image/*" multiple hidden />
+            </div>
+            <div class="diary-actions">
+              <button class="primary-action" type="submit">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z" />
+                  <path d="M17 21v-8H7v8M7 3v5h8" />
+                </svg>
+                保存记录
+              </button>
+              <button id="clearDiaryForm" type="button">清空输入</button>
+            </div>
+          </form>
+
+          <div class="diary-list-panel">
+            <div class="panel-heading">
+              <h3>记录列表</h3>
+              <span id="diaryCount">0 条</span>
+            </div>
+            <div class="diary-list" id="diaryList" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="anime-section" id="anime">
+        <div class="section-heading">
+          <div>
+            <p class="small-label">ANIME UPDATE</p>
+            <h2>2026新番日程</h2>
+          </div>
+          <div class="anime-actions">
+            <button id="refreshAnime" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 12a9 9 0 1 0 3-6.7" />
+                <path d="M3 4v6h6" />
+              </svg>
+              刷新更新
+            </button>
+            <a class="link-button" href="https://yuc.wiki/" target="_blank" rel="noopener noreferrer">
+              打开 yuc.wiki
+            </a>
+          </div>
+        </div>
+
+        <div class="schedule-panel">
+          <div class="schedule-hero">
+            <div>
+              <p id="scheduleSeason">正在读取当前季度</p>
+              <h3 id="scheduleTodayTitle">今天更新</h3>
+              <span id="scheduleSource">根据当前日期自动匹配 2026 年新番表。</span>
+            </div>
+            <a id="scheduleSourceLink" href="https://yuc.wiki/202604/" target="_blank" rel="noopener noreferrer">
+              查看原表
+            </a>
+          </div>
+          <div class="weekday-tabs" id="weekdayTabs" aria-label="按星期查看新番"></div>
+          <div class="today-schedule" id="todaySchedule" aria-live="polite">
+            <p class="feed-empty">正在读取今天的新番日程。</p>
+          </div>
+        </div>
+
+        <div class="anime-layout">
+          <div class="anime-feed-panel">
+            <div class="panel-heading">
+              <h3>站点更新</h3>
+              <span id="animeUpdated">等待刷新</span>
+            </div>
+            <div class="anime-feed" id="animeFeed" aria-live="polite">
+              <p class="feed-empty">正在读取动漫更新。</p>
+            </div>
+          </div>
+
+          <div class="anime-link-panel">
+            <div class="panel-heading">
+              <h3>快速入口</h3>
+              <span>外部打开</span>
+            </div>
+            <a href="https://yuc.wiki/new/" target="_blank" rel="noopener noreferrer">
+              <strong>新番卫星观测站</strong>
+              <span>查看每日和季度新番更新</span>
+            </a>
+            <a href="https://yuc.wiki/202604/" target="_blank" rel="noopener noreferrer">
+              <strong>2026年4月新番表</strong>
+              <span>查看当前季度条目</span>
+            </a>
+            <a href="https://yuc.wiki/movie/" target="_blank" rel="noopener noreferrer">
+              <strong>动画电影档期</strong>
+              <span>查看近期院线信息</span>
+            </a>
+            <a href="https://yuc.wiki/sp/" target="_blank" rel="noopener noreferrer">
+              <strong>Movie / OVA / OAD / SP</strong>
+              <span>查看特别篇和剧场版</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

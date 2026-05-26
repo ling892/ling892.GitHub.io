@@ -1,0 +1,1156 @@
+:root {
+  --ink: #171b1f;
+  --muted: #5d666d;
+  --soft: rgba(255, 255, 255, 0.72);
+  --soft-strong: rgba(255, 255, 255, 0.86);
+  --line: rgba(255, 255, 255, 0.46);
+  --teal: #167c7c;
+  --teal-dark: #0d5759;
+  --coral: #d9644a;
+  --shadow: 0 26px 70px rgba(20, 26, 31, 0.24);
+  --radius: 8px;
+  color-scheme: light;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Microsoft YaHei", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  background: #101417;
+}
+
+button,
+[contenteditable="true"] {
+  font: inherit;
+}
+
+button {
+  min-height: 44px;
+  border: 1px solid rgba(20, 30, 35, 0.12);
+  border-radius: var(--radius);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(22, 124, 124, 0.42);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 14px 30px rgba(20, 26, 31, 0.12);
+}
+
+button:focus-visible,
+a:focus-visible,
+[contenteditable="true"]:focus-visible {
+  outline: 3px solid rgba(22, 124, 124, 0.34);
+  outline-offset: 3px;
+}
+
+button svg,
+.intro-actions svg,
+.gallery-actions svg,
+.diary-actions svg,
+.diary-photo-actions svg,
+.anime-actions svg,
+.empty-gallery svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.background-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image: url("./assets/anime-background.jpg");
+  background-position: center 42%;
+  background-size: cover;
+  transition: background-image 240ms ease, filter 240ms ease;
+}
+
+.background-shade {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(5, 9, 12, 0.42), rgba(5, 9, 12, 0.16) 44%, rgba(5, 9, 12, 0.34)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.04));
+  pointer-events: none;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: min(1180px, calc(100% - 40px));
+  margin: 18px auto 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.64);
+  box-shadow: 0 10px 40px rgba(17, 21, 25, 0.12);
+  backdrop-filter: blur(18px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 760;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 50%;
+  color: white;
+  background: linear-gradient(135deg, var(--teal), var(--coral));
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.site-nav a {
+  padding: 9px 12px;
+  border-radius: 999px;
+  color: rgba(23, 27, 31, 0.82);
+  font-size: 14px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.site-nav a:hover {
+  background: rgba(255, 255, 255, 0.68);
+}
+
+.owner-auth {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.owner-auth span {
+  color: rgba(23, 27, 31, 0.72);
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.owner-auth form {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.owner-auth input {
+  width: 118px;
+  height: 36px;
+  padding: 0 10px;
+  font-size: 13px;
+}
+
+.owner-auth button {
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 760;
+}
+
+.owner-only {
+  display: none !important;
+}
+
+body.owner-mode .owner-only {
+  display: revert !important;
+}
+
+body.owner-mode .intro-actions,
+body.owner-mode .gallery-actions,
+body.owner-mode .diary-actions,
+body.owner-mode .diary-photo-actions,
+body.owner-mode .button-grid {
+  display: flex !important;
+}
+
+body.owner-mode .button-grid {
+  display: grid !important;
+}
+
+body.owner-mode .diary-form {
+  display: grid !important;
+}
+
+main {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.intro-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 28px;
+  min-height: calc(100vh - 88px);
+  align-items: center;
+  padding: 48px 0 56px;
+}
+
+.intro-copy {
+  max-width: 720px;
+  padding: 44px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--soft);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(22px);
+}
+
+.small-label {
+  margin: 0 0 14px;
+  color: var(--teal-dark);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+h1,
+h2,
+p {
+  overflow-wrap: anywhere;
+}
+
+h1 {
+  max-width: 100%;
+  margin: 0;
+  color: #111518;
+  font-size: clamp(40px, 5.8vw, 78px);
+  line-height: 0.96;
+  letter-spacing: 0;
+}
+
+.role {
+  max-width: 680px;
+  margin: 22px 0 0;
+  color: #213037;
+  font-size: clamp(18px, 2vw, 26px);
+  font-weight: 650;
+  line-height: 1.42;
+}
+
+.bio {
+  max-width: 660px;
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.86;
+}
+
+[contenteditable="true"] {
+  border-radius: 6px;
+  transition: background 140ms ease, box-shadow 140ms ease;
+}
+
+[contenteditable="true"]:hover,
+[contenteditable="true"]:focus {
+  background: rgba(255, 255, 255, 0.44);
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.22);
+}
+
+.intro-actions,
+.gallery-actions,
+.diary-actions,
+.anime-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.intro-actions button,
+.gallery-actions button,
+.diary-actions button,
+.diary-photo-actions button,
+.anime-actions button,
+.button-grid button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 760;
+}
+
+.primary-action {
+  border-color: rgba(13, 87, 89, 0.2);
+  color: white;
+  background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+}
+
+.primary-action:hover {
+  background: linear-gradient(135deg, #1a8f8f, #0f6567);
+}
+
+.quiet-action {
+  color: var(--teal-dark);
+}
+
+.control-panel {
+  align-self: center;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--soft-strong);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(22px);
+}
+
+.panel-heading,
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.panel-heading h2,
+.section-heading h2 {
+  margin: 0;
+  font-size: 26px;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.panel-heading span {
+  color: var(--coral);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.background-preview {
+  height: 230px;
+  margin: 18px 0;
+  border: 1px solid rgba(20, 30, 35, 0.1);
+  border-radius: var(--radius);
+  background-image: url("./assets/anime-background.jpg");
+  background-position: center 42%;
+  background-size: cover;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: 1fr 52px 52px 52px;
+  gap: 8px;
+}
+
+.button-grid button:not(:first-child) {
+  padding: 0;
+}
+
+.status-line {
+  min-height: 42px;
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.gallery-section {
+  min-height: 54vh;
+  padding: 30px 0 72px;
+}
+
+.life-section,
+.anime-section {
+  padding: 18px 0 72px;
+}
+
+.section-heading {
+  padding: 26px 0;
+}
+
+.gallery-section .section-heading h2,
+.life-section .section-heading h2,
+.anime-section .section-heading h2 {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.gallery-section .small-label,
+.life-section .small-label,
+.anime-section .small-label {
+  color: #2cb8b6;
+}
+
+.section-note {
+  max-width: 360px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.photo-card,
+.empty-gallery {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.74);
+  box-shadow: 0 18px 44px rgba(20, 26, 31, 0.16);
+  backdrop-filter: blur(16px);
+}
+
+.photo-card {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+.photo-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-card figcaption {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: white;
+  background: rgba(10, 14, 17, 0.55);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  backdrop-filter: blur(10px);
+}
+
+.empty-gallery {
+  grid-column: 1 / -1;
+  display: grid;
+  min-height: 260px;
+  place-items: center;
+  align-content: center;
+  gap: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.empty-gallery svg {
+  width: 44px;
+  height: 44px;
+  color: var(--teal);
+}
+
+.empty-gallery p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.life-layout,
+.anime-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(340px, 1.08fr);
+  gap: 18px;
+}
+
+.schedule-panel,
+.diary-form,
+.diary-list-panel,
+.anime-feed-panel,
+.anime-link-panel {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 18px 44px rgba(20, 26, 31, 0.16);
+  backdrop-filter: blur(18px);
+}
+
+.schedule-panel,
+.diary-form,
+.diary-list-panel,
+.anime-feed-panel,
+.anime-link-panel {
+  padding: 20px;
+}
+
+.schedule-panel {
+  margin-bottom: 18px;
+}
+
+.schedule-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+
+.schedule-hero p,
+.schedule-hero h3,
+.schedule-hero span {
+  margin: 0;
+}
+
+.schedule-hero p {
+  color: var(--teal-dark);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.schedule-hero h3 {
+  margin-top: 8px;
+  color: #121b21;
+  font-size: clamp(24px, 3vw, 34px);
+  line-height: 1.15;
+}
+
+.schedule-hero span {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.schedule-hero a {
+  display: inline-flex;
+  min-height: 38px;
+  flex: 0 0 auto;
+  align-items: center;
+  border: 1px solid rgba(20, 30, 35, 0.12);
+  border-radius: var(--radius);
+  padding: 0 12px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+  font-weight: 760;
+  text-decoration: none;
+}
+
+.weekday-tabs {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.weekday-tabs button {
+  min-height: 52px;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 6px;
+  font-size: 13px;
+}
+
+.weekday-tabs button strong {
+  font-size: 14px;
+}
+
+.weekday-tabs button span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.weekday-tabs button.active {
+  color: white;
+  background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+}
+
+.weekday-tabs button.active span {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.today-schedule {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.schedule-card {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 12px;
+  min-height: 132px;
+  border: 1px solid rgba(20, 30, 35, 0.1);
+  border-radius: var(--radius);
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.64);
+}
+
+.schedule-card img {
+  width: 92px;
+  height: 124px;
+  border-radius: 6px;
+  object-fit: cover;
+  background: rgba(20, 30, 35, 0.1);
+}
+
+.schedule-card-body {
+  min-width: 0;
+}
+
+.schedule-time {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.schedule-time span {
+  border-radius: 999px;
+  padding: 4px 8px;
+  color: white;
+  background: var(--teal);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.schedule-time span + span {
+  color: var(--teal-dark);
+  background: rgba(22, 124, 124, 0.13);
+}
+
+.schedule-card h4 {
+  margin: 0;
+  color: #152027;
+  font-size: 16px;
+  line-height: 1.38;
+}
+
+.schedule-area {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.schedule-card a {
+  display: inline-flex;
+  margin-top: 10px;
+  color: var(--teal-dark);
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.diary-form {
+  display: grid;
+  gap: 14px;
+}
+
+.diary-form label {
+  display: grid;
+  gap: 8px;
+  color: #223039;
+  font-size: 13px;
+  font-weight: 760;
+}
+
+.diary-photo-field {
+  display: grid;
+  gap: 10px;
+}
+
+.diary-photo-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  color: #223039;
+  font-size: 13px;
+  font-weight: 760;
+}
+
+.diary-photo-heading small {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.diary-photo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.diary-photo-actions button {
+  min-height: 40px;
+}
+
+.diary-photo-preview {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  min-height: 78px;
+  border: 1px dashed rgba(20, 30, 35, 0.18);
+  border-radius: var(--radius);
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.44);
+}
+
+.diary-photo-preview p {
+  grid-column: 1 / -1;
+  align-self: center;
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.diary-photo-preview img {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  object-fit: cover;
+  box-shadow: inset 0 0 0 1px rgba(20, 30, 35, 0.08);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 150px;
+  gap: 12px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid rgba(20, 30, 35, 0.14);
+  border-radius: var(--radius);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.78);
+  font: inherit;
+}
+
+input,
+select {
+  height: 44px;
+  padding: 0 12px;
+}
+
+textarea {
+  min-height: 150px;
+  padding: 12px;
+  resize: vertical;
+  line-height: 1.7;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 3px solid rgba(22, 124, 124, 0.24);
+  border-color: rgba(22, 124, 124, 0.52);
+}
+
+.diary-actions {
+  margin-top: 4px;
+}
+
+.diary-list-panel .panel-heading,
+.anime-feed-panel .panel-heading,
+.anime-link-panel .panel-heading {
+  margin-bottom: 14px;
+}
+
+.diary-list-panel h3,
+.anime-feed-panel h3,
+.anime-link-panel h3 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.diary-list-panel .panel-heading span,
+.anime-feed-panel .panel-heading span,
+.anime-link-panel .panel-heading span {
+  color: var(--coral);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.diary-list,
+.anime-feed {
+  display: grid;
+  gap: 10px;
+  max-height: 520px;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.diary-entry,
+.anime-entry {
+  border: 1px solid rgba(20, 30, 35, 0.1);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.64);
+  padding: 14px;
+}
+
+.entry-topline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.entry-topline h4 {
+  margin: 0;
+  color: #152027;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.entry-meta {
+  color: var(--teal-dark);
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.diary-entry p,
+.anime-entry p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.diary-entry-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.diary-entry-gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  object-fit: cover;
+  background: rgba(20, 30, 35, 0.1);
+}
+
+.entry-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.entry-actions button,
+.entry-actions a,
+.link-button {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(20, 30, 35, 0.12);
+  border-radius: var(--radius);
+  padding: 0 12px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+  font-weight: 760;
+  text-decoration: none;
+}
+
+.entry-actions a:hover,
+.link-button:hover {
+  border-color: rgba(22, 124, 124, 0.42);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.feed-empty,
+.diary-empty {
+  margin: 0;
+  padding: 18px;
+  border: 1px dashed rgba(20, 30, 35, 0.18);
+  border-radius: var(--radius);
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.48);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.anime-link-panel {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.anime-link-panel a {
+  display: grid;
+  gap: 6px;
+  border: 1px solid rgba(20, 30, 35, 0.1);
+  border-radius: var(--radius);
+  padding: 16px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.64);
+  text-decoration: none;
+}
+
+.anime-link-panel a:hover {
+  border-color: rgba(22, 124, 124, 0.42);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.anime-link-panel strong {
+  font-size: 15px;
+}
+
+.anime-link-panel a span {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.toast {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 30;
+  max-width: min(360px, calc(100vw - 44px));
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 160ms ease, transform 160ms ease;
+  backdrop-filter: blur(16px);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    width: min(100% - 28px, 700px);
+    margin-top: 14px;
+  }
+
+  .site-nav {
+    display: none;
+  }
+
+  .site-header {
+    flex-wrap: wrap;
+  }
+
+  .owner-auth {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  main {
+    width: min(100% - 28px, 700px);
+  }
+
+  .intro-section {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 32px 0 36px;
+  }
+
+  .intro-copy {
+    padding: 30px;
+  }
+
+  h1 {
+    max-width: 100%;
+    font-size: clamp(42px, 13vw, 70px);
+  }
+
+  .control-panel {
+    align-self: stretch;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .life-layout,
+  .anime-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .today-schedule {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .site-header {
+    padding: 10px;
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
+  #navName {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .owner-auth {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .owner-auth form {
+    width: 100%;
+  }
+
+  .owner-auth input {
+    flex: 1;
+    width: auto;
+  }
+
+  .intro-copy {
+    padding: 24px;
+  }
+
+  .role {
+    font-size: 18px;
+  }
+
+  .panel-heading,
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .button-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .button-grid button:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+
+  .diary-actions,
+  .diary-photo-actions,
+  .anime-actions {
+    width: 100%;
+  }
+
+  .diary-actions button,
+  .diary-photo-actions button,
+  .anime-actions button,
+  .link-button {
+    flex: 1 1 auto;
+  }
+
+  .diary-photo-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .diary-photo-preview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .diary-entry-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .schedule-hero {
+    flex-direction: column;
+  }
+
+  .weekday-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .schedule-card {
+    grid-template-columns: 78px minmax(0, 1fr);
+  }
+
+  .schedule-card img {
+    width: 78px;
+    height: 108px;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
